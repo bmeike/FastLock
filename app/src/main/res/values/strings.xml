@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FastLock</string>
+
+    <string name="run">run</string>
+    <string name="start">start</string>
+    <string name="stop">stop</string>
+
+
+    <string name="threads">Threads:</string>
+    <string name="one">1</string>
+</resources>

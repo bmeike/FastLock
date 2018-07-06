@@ -1,0 +1,44 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    //noinspection OldTargetApi
+    compileSdkVersion compile_sdk_version.toInteger()
+
+    buildToolsVersion "$build_tools_version"
+
+    defaultConfig {
+        applicationId "net.callmeike.android.fastlocking"
+        versionCode 1
+        versionName "1.0"
+
+        minSdkVersion 23
+        targetSdkVersion 28
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    // Room preprocessor
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+
+    // Support lib
+    implementation "com.android.support:appcompat-v7:27.1.1"
+    implementation "com.android.support:recyclerview-v7:27.1.1"
+
+    testImplementation 'junit:junit:4.12'
+}

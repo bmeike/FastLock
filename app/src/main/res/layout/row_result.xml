@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) ${YEAR} Post Social Inc
+     All Rights Reserved.
+     Post Social Inc Confidential and Proprietary.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Double Checked"
+        />
+
+    <TextView
+        android:id="@+id/t0"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:textSize="18sp"
+        tools:text="473"
+        />
+
+
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:textSize="18sp"
+        tools:text="419"
+        />
+
+</LinearLayout>
