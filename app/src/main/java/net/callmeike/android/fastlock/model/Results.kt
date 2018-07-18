@@ -17,11 +17,11 @@ package net.callmeike.android.fastlock.model
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
-import net.callmeike.android.fastlock.db.COL_T0
-import net.callmeike.android.fastlock.db.COL_T1
+import net.callmeike.android.fastlock.db.COL_T_READ
+import net.callmeike.android.fastlock.db.COL_T_WRITE
 import net.callmeike.android.fastlock.db.COL_THREADS
 import net.callmeike.android.fastlock.db.COL_TS
-import net.callmeike.android.fastlock.db.COL_TYPE
+import net.callmeike.android.fastlock.db.COL_TEST_TYPE
 
 
 enum class TestType(val displayName: String, val type: Int) {
@@ -35,15 +35,15 @@ enum class TestType(val displayName: String, val type: Int) {
 val TestTypeToName = TestType.values().map({ it.type to it.displayName }).toMap()
 
 
-@Entity(primaryKeys = [COL_TYPE, COL_TS])
+@Entity(primaryKeys = [COL_TEST_TYPE, COL_TS])
 data class Results(
         @ColumnInfo(name = COL_TS)
         val ts: Long,
-        @ColumnInfo(name = COL_TYPE)
+        @ColumnInfo(name = COL_TEST_TYPE)
         val type: Int,
         @ColumnInfo(name = COL_THREADS)
         val nThreads: Int,
-        @ColumnInfo(name = COL_T0)
-        val t0: Long,
-        @ColumnInfo(name = COL_T1)
-        val t1: Long)
+        @ColumnInfo(name = COL_T_READ)
+        val tRead: Long,
+        @ColumnInfo(name = COL_T_WRITE)
+        val tWrite: Long)

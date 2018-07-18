@@ -27,11 +27,11 @@ import android.os.AsyncTask
 const val DB_VERSION = 1
 const val DB_FILE = "timings.db"
 
-const val COL_TYPE = "type"
+const val COL_TEST_TYPE = "type"
 const val COL_THREADS = "threads"
-const val COL_T0 = "t0"
-const val COL_T1 = "t1"
 const val COL_TS = "ts"
+const val COL_T_READ = "tRead"
+const val COL_T_WRITE = "tWrite"
 
 
 class StoreResults(private val db: TimingsDb, private val results: List<Results>) : AsyncTask<Unit, Unit, Unit>() {

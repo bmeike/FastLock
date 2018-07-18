@@ -15,17 +15,17 @@
 */
 package net.callmeike.android.fastlock.test
 
+import android.content.Context
+import android.os.Handler
 import net.callmeike.android.fastlock.FastLock
 import net.callmeike.android.fastlock.db.StoreResults
 import net.callmeike.android.fastlock.model.Results
 import net.callmeike.android.fastlock.model.TestType
-import android.content.Context
-import android.os.Handler
-import android.os.SystemClock
 import java.util.concurrent.CyclicBarrier
+import kotlin.system.measureNanoTime
 
 
-const val ITERATIONS = 100000
+const val ITERATIONS = 300000
 
 
 abstract class Test<T> {
@@ -37,35 +37,30 @@ abstract class Test<T> {
 class TestOne(private val nThreads: Int, testFactory: (v0: Any) -> Test<Any>) {
     private val initVal = Object()
 
-    private val test0 = testFactory(initVal)
-    private val test1 = testFactory(initVal)
+    private val readTest = testFactory(initVal)
+    private val writeTest = testFactory(initVal)
 
     private var iterations = 0L
-    private var t0Total = 0L
-    private var t1Total = 0L
+    private var tReadTotal = 0L
+    private var tWriteTotal = 0L
 
     var value: Any? = null
 
-    fun results(ts: Long) = Results(ts, test0.type.type, nThreads, t0Total / iterations, t1Total / iterations)
+    fun results(ts: Long)
+            = Results(ts, readTest.type.type, nThreads, tReadTotal / iterations, tWriteTotal / iterations)
 
     fun runOnce() {
-        var t0 = -SystemClock.elapsedRealtimeNanos()
-        value = test0.get(initVal)
-        t0 += SystemClock.elapsedRealtimeNanos()
-
         val newVal = Object()
-        var t1 = -SystemClock.elapsedRealtimeNanos()
-        value = test1.get(newVal)
-        t1 += SystemClock.elapsedRealtimeNanos()
-
-        update(t0, t1)
+        val tRead = measureNanoTime { value = readTest.get(initVal) }
+        val tWrite = measureNanoTime { value = writeTest.get(newVal) }
+        update(tRead, tWrite)
     }
 
     @Synchronized
-    private fun update(t0: Long, t1: Long) {
+    private fun update(tRead: Long, tWrite: Long) {
         iterations++
-        t0Total += t0
-        t1Total += t1
+        tReadTotal += tRead
+        tWriteTotal += tWrite
     }
 }
 
@@ -108,7 +103,7 @@ class LockTest(ctxt: Context, threads: Int?, private val resultsListener: (resul
 
     private fun finishTest() {
         val ts = System.currentTimeMillis()
-        val results = tests.map({ test -> test.results(ts) }).sortedBy { it.t0 }
+        val results = tests.map({ test -> test.results(ts) }).sortedBy { it.tRead }
         handler.post { resultsListener(results) }
         StoreResults(db, results).execute()
     }

@@ -22,7 +22,7 @@
         />
 
     <TextView
-        android:id="@+id/t0"
+        android:id="@+id/t_read"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -33,7 +33,7 @@
 
 
     <TextView
-        android:id="@+id/t1"
+        android:id="@+id/t_write"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

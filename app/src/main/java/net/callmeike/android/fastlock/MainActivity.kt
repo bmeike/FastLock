@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 private const val DELAY = 1000 * 60L
+private val NTHREADS = listOf(1, 5, 10, 20)
 
 class MainActivity : AppCompatActivity() {
     private lateinit var handler: Handler
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
         num_threads.setText(test.nThreads.toString())
 
-        root.setBackgroundColor(getColor(R.color.inProgress))
+        root.setBackgroundColor(resources.getColor(R.color.inProgress))
 
         test.runTest()
     }
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun nextTest() {
-        beginTest(LockTest(this, listOf(1, 5, 10, 20).shuffled()[0], { results -> completeTest(results) }))
+        beginTest(LockTest(this, NTHREADS.shuffled()[0], { results -> completeTest(results) }))
     }
 
     private fun completeTest(results: List<Results>) {

@@ -1,0 +1,20 @@
+
+
+Lock type:
+	Null
+	Synchronized
+	Double check
+	Spin
+
+State
+	Uninitialized
+	Initialized
+
+Access
+	Uncontested
+	Contested
+
+Hardware
+	Pixel 2
+	Nexus 4
+	Nexus 6

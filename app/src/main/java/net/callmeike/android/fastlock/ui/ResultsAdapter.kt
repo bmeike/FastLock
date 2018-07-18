@@ -29,13 +29,13 @@ class ResultsAdapter(results: List<Results>?) : RecyclerView.Adapter<ResultsAdap
 
     class ViewHolder(root: View) : RecyclerView.ViewHolder(root) {
         private val nameView: TextView = root.findViewById(R.id.name)
-        private val t0View: TextView = root.findViewById(R.id.t0)
-        private val t1View: TextView = root.findViewById(R.id.t1)
+        private val tReadView: TextView = root.findViewById(R.id.t_read)
+        private val tWriteView: TextView = root.findViewById(R.id.t_write)
 
         fun setResults(results: Results) {
             nameView.text = TestTypeToName[results.type]
-            t0View.text = results.t0.toString()
-            t1View.text = results.t1.toString()
+            tReadView.text = results.tRead.toString()
+            tWriteView.text = results.tWrite.toString()
         }
     }
 
