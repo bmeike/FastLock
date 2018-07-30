@@ -41,6 +41,8 @@ fit f7(x) 'data.csv' using (@minutes):(((@testSpin)&&(@threads)) ? @readMs : 1/0
 f8(x) = m8*x + b8
 fit f8(x) 'data.csv' using (@minutes):(((@testSpin)&&(@threads)) ? @writeMs : 1/0) via m8,b8
 
+set yrange [0:200]
+
 plot \
      'data.csv' using (@minutes):(((@testNull)&&(@threads)) ? @readMs : 1/0) title "null, read" with points pt 1 lc rgb "#990099", \
      f1(x) title "fit" lc rgb "#990099", \
