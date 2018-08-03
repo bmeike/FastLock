@@ -42,6 +42,8 @@ fit f7(x) 'data.csv' using (@minutes):(((@testType)&&(@threads20)) ? @readMs : 1
 f8(x) = m8*x + b8
 fit f8(x) 'data.csv' using (@minutes):(((@testType)&&(@threads20)) ? @writeMs : 1/0) via m8,b8
 
+stats 'data.csv' using ((@testType) ? @writeMs : 1/0) name "stats"
+
 plot \
      'data.csv' using (@minutes):(((@testType)&&(@threads1)) ? @readMs : 1/0) title "1 thread, read" with points pt 1 lc rgb "#990099", \
      f1(x) title "fit" lc rgb "#990099", \
