@@ -50,9 +50,15 @@ class TestOne(private val nThreads: Int, testFactory: (v0: Any) -> Test<Any>) {
             = Results(ts, readTest.type.type, nThreads, tReadTotal / iterations, tWriteTotal / iterations)
 
     fun runOnce() {
+        val oldVal = initVal
         val newVal = Object()
-        val tRead = measureNanoTime { value = readTest.get(initVal) }
-        val tWrite = measureNanoTime { value = writeTest.get(newVal) }
+        var tRead = 0L
+        var tWrite = 0L
+        listOf(
+            { tRead = measureNanoTime { value = readTest.get(oldVal) } },
+            { tWrite = measureNanoTime { value = writeTest.get(newVal) } })
+                .shuffled()
+                .map { it.invoke() }
         update(tRead, tWrite)
     }
 

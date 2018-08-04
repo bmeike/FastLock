@@ -32,7 +32,7 @@ class SynchronizedTest<T>(initVal: T) : Test<T>() {
     private var value: T = initVal
 
     override fun get(newVal: T): T = synchronized(lock) {
-        if (!(value === newVal)) {
+        if (value !== newVal) {
             value = newVal
         }
         return newVal
