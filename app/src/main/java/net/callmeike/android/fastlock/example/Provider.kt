@@ -15,6 +15,8 @@
 */
 package net.callmeike.android.fastlock.example
 
+import java.util.concurrent.atomic.AtomicReference
+
 interface Provider<A> {
     fun get(): A
 }
@@ -22,9 +24,10 @@ interface Provider<A> {
 /**
  * Example Double-check provider
  */
-class DoubleCheckedProvider <A>(private val provider: Provider<A>) : Provider<A> {
+class DoubleCheckedProvider<A>(private val provider: Provider<A>) : Provider<A> {
     private val lock = Object()
-    @Volatile private var value: A? = null
+    @Volatile
+    private var value: A? = null
 
     override fun get(): A {
         if (value == null) {
@@ -35,5 +38,22 @@ class DoubleCheckedProvider <A>(private val provider: Provider<A>) : Provider<A>
             }
         }
         return value!!
+    }
+}
+
+class SpinProvider<A>(private val provider: Provider<A>) : Provider<A> {
+    private val value: AtomicReference<A> = AtomicReference()
+
+    override fun get(): A {
+        while (true) {
+            val v1 = value.get()
+            if (v1 != null) {
+                return v1
+            }
+            val v2 = provider.get()
+            if (value.compareAndSet(null, v2)) {
+                return v2
+            }
+        }
     }
 }
